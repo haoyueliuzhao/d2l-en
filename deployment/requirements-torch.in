@@ -1,0 +1,4 @@
+# Install from the official CUDA 12.8 wheel index (see install.sh).
+# sm_120 (Blackwell) requires a modern PyTorch/CUDA build.
+torch>=2.7,<3
+torchvision>=0.22,<1

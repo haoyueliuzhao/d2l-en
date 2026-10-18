@@ -1,0 +1,5 @@
+# Independent HTML build environment; never install the training project here.
+-c constraints-book.txt
+d2lbook @ git+https://github.com/d2l-ai/d2l-book.git@2322e565deda1605451bc3976be3f21c731223cc
+pypandoc-binary
+setuptools

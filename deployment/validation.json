@@ -1,0 +1,107 @@
+{
+  "checked_at": "2026-10-18T16:50:22.591500+08:00",
+  "python": "3.12.13",
+  "torch": "2.11.0+cu128",
+  "torchvision": "0.26.0+cu128",
+  "cuda_runtime": "12.8",
+  "numpy": "2.5.2",
+  "pandas": "3.0.6",
+  "d2l_module": "d2l/torch.py",
+  "scope": "Two CPU textbook notebooks and a small synthetic CUDA regression; not a full-book or performance benchmark.",
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+  "compute_capability": [
+    12,
+    0
+  ],
+  "compiled_cuda_architectures": [
+    "sm_75",
+    "sm_80",
+    "sm_86",
+    "sm_90",
+    "sm_100",
+    "sm_120"
+  ],
+  "gpu_regression": {
+    "examples": 1024,
+    "steps": 100,
+    "seed": 42,
+    "initial_mse": 36.79046630859375,
+    "final_mse": 1.27631238910908e-12,
+    "elapsed_seconds": 0.24,
+    "device": "cuda:0",
+    "torchvision_cuda_nms": "passed"
+  },
+  "d2l_synthetic_data": "passed",
+  "notebooks": [
+    {
+      "path": "chapter_preliminaries/ndarray.ipynb",
+      "status": "passed",
+      "code_cells": 24,
+      "elapsed_seconds": 2.357
+    },
+    {
+      "path": "chapter_preliminaries/autograd.ipynb",
+      "status": "passed",
+      "code_cells": 13,
+      "elapsed_seconds": 2.306
+    }
+  ],
+  "status": "passed",
+  "jupyter_service": {
+    "bind": "127.0.0.1",
+    "port": 8888,
+    "unauthenticated_status": 403,
+    "authenticated_status": 200,
+    "kernel_registered": "d2l-pytorch",
+    "notebook_visible": true
+  },
+  "dependency_check": {
+    "packages": 128,
+    "status": "passed"
+  },
+  "book_service": {
+    "bind": "127.0.0.1",
+    "port": 8080,
+    "http_checks": [
+      {
+        "path": "/",
+        "status": 200,
+        "bytes": 158154
+      },
+      {
+        "path": "/chapter_preliminaries/ndarray.html",
+        "status": 200,
+        "bytes": 160290
+      },
+      {
+        "path": "/_static/d2l.css",
+        "status": 200,
+        "bytes": 1815
+      },
+      {
+        "path": "/_images/code.jpg",
+        "status": 200,
+        "bytes": 43472
+      },
+      {
+        "path": "/d2l-pytorch-notebooks.zip",
+        "status": 200,
+        "bytes": 34357651
+      }
+    ]
+  },
+  "book_build": {
+    "source_commit": "23d7a5aecceee57d1292c56e90cce307f183bb0a",
+    "built_at_utc": "2026-10-18T08:50:46.928775+00:00",
+    "html_pages": 194,
+    "pytorch_notebooks": 183,
+    "notebook_execution": false,
+    "framework_tabs": [
+      "pytorch",
+      "mxnet",
+      "jax",
+      "tensorflow"
+    ],
+    "api_reference": "AST source extraction without framework imports"
+  }
+}

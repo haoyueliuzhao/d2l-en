@@ -33,3 +33,12 @@ static/latex_style/PT1*
 /chapter_hyperparameter_optimization/std.out
 latex_style/*
 static/latex_style/*
+
+# Local deployment environments, generated notebooks, and private service state
+/.venv/
+/.venv-book/
+/.d2l-runtime/
+/.deployment-validation/
+/notebooks/
+/deployment/*.log
+!/deployment/validation.json
