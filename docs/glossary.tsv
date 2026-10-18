@@ -1,0 +1,311 @@
+english	chinese
+deep learning	深度学习
+machine learning	机器学习
+supervised learning	监督学习
+unsupervised learning	无监督学习
+self-supervised learning	自监督学习
+semi-supervised learning	半监督学习
+reinforcement learning	强化学习
+representation learning	表示学习
+transfer learning	迁移学习
+multitask learning	多任务学习
+training set	训练集
+validation set	验证集
+test set	测试集
+generalization	泛化
+overfitting	过拟合
+underfitting	欠拟合
+inductive bias	归纳偏置
+empirical risk	经验风险
+expected risk	期望风险
+loss function	损失函数
+objective function	目标函数
+regularization	正则化
+hyperparameter	超参数
+cross-validation	交叉验证
+data augmentation	数据增强
+scalar	标量
+vector	向量
+matrix	矩阵
+tensor	张量
+transpose	转置
+symmetric matrix	对称矩阵
+identity matrix	单位矩阵
+diagonal matrix	对角矩阵
+matrix multiplication	矩阵乘法
+Hadamard product	哈达玛积
+dot product	点积
+inner product	内积
+outer product	外积
+linear combination	线性组合
+linear independence	线性无关
+linear transformation	线性变换
+orthogonality	正交性
+orthonormal basis	标准正交基
+vector space	向量空间
+eigenvalue	特征值
+eigenvector	特征向量
+eigendecomposition	特征分解
+singular value decomposition	奇异值分解
+positive definite	正定
+positive semidefinite	半正定
+Frobenius norm	弗罗贝尼乌斯范数
+Euclidean norm	欧几里得范数
+broadcasting	广播机制
+partial derivative	偏导数
+gradient	梯度
+Jacobian	雅可比矩阵
+Hessian	海森矩阵
+chain rule	链式法则
+automatic differentiation	自动微分
+computational graph	计算图
+backpropagation	反向传播
+Taylor expansion	泰勒展开
+probability distribution	概率分布
+random variable	随机变量
+conditional probability	条件概率
+joint probability	联合概率
+marginal probability	边缘概率
+Bayes' theorem	贝叶斯定理
+Bayes' rule	贝叶斯法则
+independent and identically distributed	独立同分布
+conditional independence	条件独立
+expectation	期望
+variance	方差
+covariance	协方差
+standard deviation	标准差
+Gaussian distribution	高斯分布
+normal distribution	正态分布
+Bernoulli distribution	伯努利分布
+categorical distribution	类别分布
+multinomial distribution	多项分布
+uniform distribution	均匀分布
+probability density function	概率密度函数
+probability mass function	概率质量函数
+cumulative distribution function	累积分布函数
+likelihood	似然
+maximum likelihood estimation	极大似然估计
+maximum a posteriori estimation	最大后验估计
+prior distribution	先验分布
+posterior distribution	后验分布
+central limit theorem	中心极限定理
+law of large numbers	大数定律
+confidence interval	置信区间
+hypothesis testing	假设检验
+entropy	熵
+cross-entropy	交叉熵
+Kullback-Leibler divergence	库尔贝克–莱布勒散度
+KL divergence	KL散度
+mutual information	互信息
+linear regression	线性回归
+logistic regression	逻辑回归
+softmax regression	softmax回归
+multiclass classification	多分类
+binary classification	二分类
+one-hot encoding	独热编码
+mean squared error	均方误差
+negative log-likelihood	负对数似然
+minibatch	小批量
+batch size	批量大小
+epoch	训练轮次
+learning rate	学习率
+stochastic gradient descent	随机梯度下降
+minibatch stochastic gradient descent	小批量随机梯度下降
+gradient descent	梯度下降
+weight decay	权重衰减
+multilayer perceptron	多层感知机
+feed-forward neural network	前馈神经网络
+hidden layer	隐藏层
+hidden unit	隐藏单元
+activation function	激活函数
+rectified linear unit	修正线性单元
+sigmoid function	sigmoid函数
+hyperbolic tangent	双曲正切
+universal approximation theorem	通用近似定理
+dropout	暂退法
+weight initialization	权重初始化
+Xavier initialization	Xavier初始化
+vanishing gradient	梯度消失
+exploding gradient	梯度爆炸
+gradient clipping	梯度裁剪
+numerical stability	数值稳定性
+convex optimization	凸优化
+convex function	凸函数
+local minimum	局部极小值
+global minimum	全局最小值
+saddle point	鞍点
+momentum	动量
+Nesterov momentum	Nesterov动量
+adaptive learning rate	自适应学习率
+learning rate scheduler	学习率调度器
+learning rate decay	学习率衰减
+convergence rate	收敛速率
+preconditioning	预条件化
+convolutional neural network	卷积神经网络
+convolutional layer	卷积层
+convolution kernel	卷积核
+cross-correlation	互相关
+receptive field	感受野
+translation invariance	平移不变性
+translation equivariance	平移等变性
+parameter sharing	参数共享
+padding	填充
+stride	步幅
+feature map	特征图
+pooling	汇聚
+max pooling	最大汇聚
+average pooling	平均汇聚
+global average pooling	全局平均汇聚
+batch normalization	批量规范化
+layer normalization	层规范化
+residual connection	残差连接
+residual network	残差网络
+densely connected network	稠密连接网络
+inception block	Inception块
+fully connected layer	全连接层
+network in network	网络中的网络
+object detection	目标检测
+semantic segmentation	语义分割
+bounding box	边界框
+anchor box	锚框
+intersection over union	交并比
+non-maximum suppression	非极大值抑制
+region of interest	感兴趣区域
+region proposal	区域提议
+multiscale detection	多尺度检测
+transposed convolution	转置卷积
+fully convolutional network	全卷积网络
+neural style transfer	神经风格迁移
+fine-tuning	微调
+recurrent neural network	循环神经网络
+hidden state	隐藏状态
+sequence model	序列模型
+language model	语言模型
+autoregressive model	自回归模型
+Markov assumption	马尔可夫假设
+latent variable	潜变量
+backpropagation through time	通过时间反向传播
+truncated backpropagation through time	截断的通过时间反向传播
+long short-term memory	长短期记忆网络
+gated recurrent unit	门控循环单元
+reset gate	重置门
+update gate	更新门
+forget gate	遗忘门
+input gate	输入门
+output gate	输出门
+memory cell	记忆元
+bidirectional recurrent neural network	双向循环神经网络
+sequence-to-sequence learning	序列到序列学习
+encoder-decoder	编码器–解码器
+encoder–decoder	编码器–解码器
+encoder	编码器
+decoder	解码器
+teacher forcing	教师强制
+beam search	束搜索
+perplexity	困惑度
+attention mechanism	注意力机制
+attention pooling	注意力汇聚
+attention score	注意力评分
+attention weight	注意力权重
+additive attention	加性注意力
+scaled dot-product attention	缩放点积注意力
+multi-head attention	多头注意力
+self-attention	自注意力
+cross-attention	交叉注意力
+positional encoding	位置编码
+positionwise feed-forward network	逐位置前馈网络
+query vector	查询向量
+key vector	键向量
+value vector	值向量
+masked softmax	掩蔽softmax
+vision transformer	视觉Transformer
+natural language processing	自然语言处理
+word embedding	词嵌入
+distributed representation	分布式表示
+skip-gram	跳元模型
+continuous bag-of-words	连续词袋模型
+negative sampling	负采样
+hierarchical softmax	层次softmax
+subword embedding	子词嵌入
+byte pair encoding	字节对编码
+masked language modeling	掩蔽语言建模
+next sentence prediction	下一句预测
+pretraining	预训练
+sentiment analysis	情感分析
+natural language inference	自然语言推断
+text classification	文本分类
+machine translation	机器翻译
+computational complexity	计算复杂度
+asynchronous computation	异步计算
+parallel computation	并行计算
+data parallelism	数据并行
+model parallelism	模型并行
+parameter server	参数服务器
+all-reduce	全规约
+bandwidth	带宽
+latency	延迟
+throughput	吞吐量
+mixed precision	混合精度
+vectorization	向量化
+just-in-time compilation	即时编译
+Markov decision process	马尔可夫决策过程
+value function	价值函数
+action-value function	动作价值函数
+Bellman equation	贝尔曼方程
+discount factor	折扣因子
+optimal policy	最优策略
+value iteration	价值迭代
+policy iteration	策略迭代
+Q-learning	Q学习
+temporal difference	时序差分
+exploration-exploitation tradeoff	探索与利用的权衡
+Gaussian process	高斯过程
+kernel function	核函数
+covariance function	协方差函数
+radial basis function	径向基函数
+squared exponential kernel	平方指数核
+posterior predictive distribution	后验预测分布
+uncertainty quantification	不确定性量化
+marginal likelihood	边缘似然
+hyperparameter optimization	超参数优化
+hyperparameter tuning	超参数调优
+search space	搜索空间
+random search	随机搜索
+grid search	网格搜索
+Bayesian optimization	贝叶斯优化
+acquisition function	采集函数
+surrogate model	代理模型
+early stopping	早停
+successive halving	逐次减半
+asynchronous successive halving	异步逐次减半
+multi-fidelity optimization	多保真度优化
+expected improvement	期望改进
+upper confidence bound	置信上界
+accuracy	准确率
+precision	精确率
+recall	召回率
+F1 score	F1分数
+confusion matrix	混淆矩阵
+root mean squared error	均方根误差
+receiver operating characteristic	受试者工作特征
+area under the curve	曲线下面积
+bias	偏差
+recommendation system	推荐系统
+collaborative filtering	协同过滤
+matrix factorization	矩阵分解
+latent factor model	隐因子模型
+implicit feedback	隐式反馈
+explicit feedback	显式反馈
+ranking loss	排序损失
+Bayesian personalized ranking	贝叶斯个性化排序
+factorization machine	因子分解机
+click-through rate	点击率
+autoencoder	自编码器
+generative adversarial network	生成对抗网络
+generator	生成器
+discriminator	判别器
+adversarial training	对抗训练
+mode collapse	模式崩溃
+deep convolutional generative adversarial network	深度卷积生成对抗网络
+minimax game	极小极大博弈
+norm	范数

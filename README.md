@@ -8,7 +8,7 @@
 
 [Book website](https://d2l.ai/) | [STAT 157 Course at UC Berkeley](http://courses.d2l.ai/berkeley-stat-157/index.html)
 
-[本地部署说明：GPU JupyterLab + 教材网站](deployment/README.zh-CN.md)
+[本地部署说明：GPU JupyterLab + 教材网站](deployment/README.zh-CN.md) | [重点学术词汇中英对照表](docs/GLOSSARY.zh-CN.md)
 
 <h5 align="center"><i>The best way to understand deep learning is learning by doing.</i></h5>
 
