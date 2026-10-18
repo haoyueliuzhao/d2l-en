@@ -36,13 +36,23 @@ mkdir -p _build/logs
 
 `requirements-book.in` 固定上游 `d2l-book` 提交 `2322e565deda1605451bc3976be3f21c731223cc`；`constraints-book.txt` 固定本次使用的构建依赖。对网站脚本或上游 `config.ini` 的修改会触发重新转换章节；输入章节不变时利用 `_build` 中的转换缓存。
 
-本地临时预览示例：
+部署后的推荐阅读入口为 `http://127.0.0.1:8888/book/`。先用 [总部署说明](README.zh-CN.md) 中的 token 链接登录 JupyterLab，再打开该入口，或点击 Launcher 中的 **D2L Textbook**。教材通过 Jupyter 的同一端口和登录身份代理到既有静态服务；已经能够直接访问 Jupyter 时，无需再建立 `8080` 的访问通道。通过其他主机名或端口访问 Jupyter 时，教材也应使用相同的地址前缀。
+
+服务管理脚本同时维护 Jupyter 与静态网站两个进程：
+
+```bash
+.venv/bin/python deployment/server.py start
+```
+
+独立静态入口 `http://127.0.0.1:8080/` 仍然保留。如果只在服务器临时预览、尚未启动服务管理脚本，可运行：
 
 ```bash
 .venv-book/bin/python -m http.server 8080 --bind 127.0.0.1 --directory _build/html
 ```
 
-长期运行请使用总部署说明中的服务管理脚本。静态网站可以放在站点根路径或 URL 子目录；Notebook 下载链接会按页面目录转换为相对链接。这里只生成 HTML 和 Notebook，未生成 PDF，因此导航栏不包含不存在的本地 PDF 链接。
+长期运行请使用总部署说明中的服务管理脚本；不要在已有静态服务占用 `8080` 时重复运行临时预览命令。静态网站可以放在站点根路径或 URL 子目录；Notebook 下载链接会按页面目录转换为相对链接，因此 `/book/` 入口无需重新构建教材。这里只生成 HTML 和 Notebook，未生成 PDF，因此导航栏不包含不存在的本地 PDF 链接。
+
+增加 `/book/` 的原因是用户反馈独立 `8080` 入口连接被拒绝，但 `8888` 的 Jupyter 可达，同时服务器侧检查网站返回 HTTP 200。不同端口的用户侧访问通道不同是目前的推断，具体转发配置尚未核实。新增入口复用已可达的 Jupyter 通道；服务器 HTTP 检查不等同于用户浏览器的实际访问验证。
 
 ## 必要的构建修订
 

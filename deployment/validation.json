@@ -103,5 +103,57 @@
       "tensorflow"
     ],
     "api_reference": "AST source extraction without framework imports"
+  },
+  "jupyter_book_proxy": {
+    "checked_at": "2026-10-18T17:04:22.301632+08:00",
+    "version": "4.6.0",
+    "url": "http://127.0.0.1:8888/book/",
+    "http_checks": [
+      {
+        "path": "/lab",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "path": "/book/",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "path": "/book/chapter_preliminaries/ndarray.html",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "path": "/book/_static/d2l.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "path": "/book/search.html",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "path": "/book/searchindex.js",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "path": "/book/d2l-pytorch-notebooks.zip",
+        "method": "HEAD",
+        "status": 200
+      },
+      {
+        "path": "/server-proxy/servers-info",
+        "method": "GET",
+        "status": 200
+      }
+    ],
+    "unauthenticated_status": 302,
+    "existing_token_preserved": true,
+    "active_kernels_before_restart": 0,
+    "dependency_check_packages": 137,
+    "browser_visual_test": false
   }
 }

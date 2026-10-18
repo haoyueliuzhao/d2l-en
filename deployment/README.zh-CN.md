@@ -21,15 +21,27 @@ cd /root/workspace/d2l-en
 .venv/bin/python deployment/server.py url
 ```
 
-第二条服务管理命令输出带 token 的 JupyterLab 地址。token 是执行服务器代码的访问凭据，不应提交仓库或公开分享。网站地址为 `http://127.0.0.1:8080/`，JupyterLab 使用 `http://127.0.0.1:8888/`。
+第二条服务管理命令输出带 token 的 JupyterLab 地址。token 是执行服务器代码的访问凭据，不应提交仓库或公开分享。JupyterLab 使用 `http://127.0.0.1:8888/`；先用完整 token 链接登录，再在同一个浏览器打开教材入口 `http://127.0.0.1:8888/book/`，或点击 JupyterLab Launcher 中的 **D2L Textbook**。教材入口沿用 Jupyter 的登录身份，通过 `jupyter-server-proxy` 转发至本机静态服务。
 
-在自己的电脑上通过 SSH 转发访问，将 `USER@SERVER` 替换为实际 SSH 登录目标；如服务器 SSH 端口不同，加 `-p` 参数：
+如果 JupyterLab 已能直接打开，教材使用相同的 `8888` 访问通道，无需另行转发 `8080`。如果通过其他主机名或端口打开 Jupyter，请保留该地址的主机、端口和 Jupyter 基础路径，将末尾的 `/lab/...` 改为 `/book/`。
+
+如果自己的电脑尚不能访问 JupyterLab，可通过 SSH 转发 `8888`，将 `USER@SERVER` 替换为实际 SSH 登录目标；如服务器 SSH 端口不同，加 `-p` 参数：
 
 ```bash
-ssh -N -L 8888:127.0.0.1:8888 -L 8080:127.0.0.1:8080 USER@SERVER
+ssh -N -L 8888:127.0.0.1:8888 USER@SERVER
 ```
 
-保持该 SSH 连接运行，在本机浏览器访问上述地址。JupyterLab 请使用 `server.py url` 输出的完整 token 链接。两个服务默认仅监听服务器 IPv4 回环地址；这些 localhost 链接不是公网发布地址，本次未配置域名、TLS 或公网反向代理。
+保持该 SSH 连接运行，在本机浏览器访问上述地址。独立静态网站仍可通过 `http://127.0.0.1:8080/` 访问；从自己的电脑使用这一独立入口时，需要相应的 `8080` 通道，例如在 SSH 命令中额外加入 `-L 8080:127.0.0.1:8080`。两个服务默认仅监听服务器 IPv4 回环地址；这些 localhost 链接不是公网发布地址，本次未配置域名、TLS 或公网反向代理。
+
+### 2026-10-18 访问入口修订
+
+用户反馈 `http://127.0.0.1:8080/` 出现 `ERR_CONNECTION_REFUSED`，但 JupyterLab 的 `8888` 可以直接打开；服务器侧静态网站返回 HTTP 200。这些现象说明服务器 HTTP 检查不能证明用户浏览器的访问通道已经连通。两端对 `8080` 和 `8888` 的转发或访问方式不同是与现象相符的推断，尚未检查用户侧的具体网络配置，不能据此断言是哪一种转发机制导致。
+
+本次增加 `/book/` 入口与 Launcher 按钮，让教材复用已可用的 Jupyter 通道。静态站点仍由原有服务管理脚本运行，代理不额外启动一份网站进程；两个服务都需要保持运行。后续修改代理配置需要重新启动 Jupyter 服务才能生效，重启前应保存 Notebook 并结束运行中的训练；服务重启会终止所属内核，内存变量不会保留。服务器侧 HTTP 验证与用户浏览器实测应分别记录，不能将前者当作后者。
+
+本次重启前确认 Jupyter 内核数量为 0，并核对重启前后 token 内容相同。首次重启在旧进程退出后被端口预检拒绝；预检改用与 HTTP 服务一致的 `SO_REUSEADDR` 后，重启成功。新 `restart` 命令保留 token 及原服务端口；它不保留运行中的内核状态。
+
+实际核验：`/lab`、`/book/`、章节页面、JavaScript、搜索页、搜索索引均返回 HTTP 200，Notebook ZIP 的 HEAD 请求返回 200；Launcher API 包含 `D2L Textbook`；未登录请求 `/book/` 返回 302 并指向 Jupyter 登录页。当前安装 `jupyter-server-proxy==4.6.0`，137 个 Python 包依赖检查通过。本次未进行用户侧浏览器画面或交互验证，记录见 `validation.json` 的 `jupyter_book_proxy`。
 
 服务管理：
 
@@ -37,6 +49,8 @@ ssh -N -L 8888:127.0.0.1:8888 -L 8080:127.0.0.1:8080 USER@SERVER
 .venv/bin/python deployment/server.py start
 .venv/bin/python deployment/server.py status
 .venv/bin/python deployment/server.py stop
+# 需要使配置更新生效时（先保存并结束正在运行的笔记本）：
+.venv/bin/python deployment/server.py restart jupyter
 ```
 
 管理脚本按 PID、进程启动时间与命令识别本项目进程。当前环境 PID 1 是 `sshd`，使用独立后台会话运行，未配置机器重启后的自动启动。重新启动机器后需再次运行 `start`。
@@ -59,7 +73,7 @@ cd /root/workspace/d2l-en
 bash deployment/install.sh
 ```
 
-`install.sh` 创建隔离 `.venv/`，先从 PyTorch 官方 CUDA 12.8 wheel 源安装 GPU 框架，再按 `constraints.txt` 安装本地可编辑 `d2l` 与 JupyterLab，最后注册项目环境内的内核。约束文件是精确版本快照，不包含所有制品的哈希。它针对本次 Linux x86_64/Python 3.12 部署，不应视为通用跨平台锁文件。
+`install.sh` 创建隔离 `.venv/`，先从 PyTorch 官方 CUDA 12.8 wheel 源安装 GPU 框架，再按 `constraints.txt` 安装本地可编辑 `d2l`、JupyterLab 与教材入口所需的 `jupyter-server-proxy`，最后注册项目环境内的内核。约束文件是精确版本快照，不包含所有制品的哈希。它针对本次 Linux x86_64/Python 3.12 部署，不应视为通用跨平台锁文件。
 
 教材构建的依赖、命令、输出及已知限制见 [BOOK.zh-CN.md](BOOK.zh-CN.md)。网站构建完成后生成可编辑学习副本并启动服务：
 

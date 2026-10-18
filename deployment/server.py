@@ -151,6 +151,8 @@ def ready(state: dict) -> bool:
 
 def port_available(port: int) -> bool:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        # Match the HTTP server: recently closed connections may remain in TIME_WAIT.
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         try:
             sock.bind((HOST, port))
         except OSError:
@@ -184,7 +186,7 @@ def terminate(state: dict) -> None:
             raise ServiceError(f"PID {pid} did not exit; retaining its state file.")
 
 
-def start(name: str, args: argparse.Namespace) -> None:
+def start(name: str, args: argparse.Namespace, *, preserve_token: bool = False) -> None:
     previous = read_state(name)
     if is_running(previous):
         if not ready(previous):
@@ -205,7 +207,13 @@ def start(name: str, args: argparse.Namespace) -> None:
     environment.setdefault("MKL_NUM_THREADS", "8")
     if name == "jupyter":
         private_directory(RUNTIME / "jupyter")
-        private_write(TOKEN_FILE, secrets.token_urlsafe(32) + "\n")
+        if not preserve_token or not TOKEN_FILE.exists():
+            private_write(TOKEN_FILE, secrets.token_urlsafe(32) + "\n")
+        else:
+            read_token()  # A restart must not silently disable authentication.
+        book_state = read_state("book")
+        book_port = book_state["port"] if is_running(book_state) else args.book_port
+        environment["D2L_BOOK_PORT"] = str(book_port)
         environment["D2L_JUPYTER_TOKEN_FILE"] = str(TOKEN_FILE)
         environment["JUPYTER_RUNTIME_DIR"] = str(RUNTIME / "jupyter")
         command = [
@@ -252,7 +260,7 @@ def start(name: str, args: argparse.Namespace) -> None:
         raise
 
 
-def stop(name: str) -> None:
+def stop(name: str, *, preserve_token: bool = False) -> None:
     state = read_state(name)
     if is_running(state):
         terminate(state)
@@ -260,7 +268,7 @@ def stop(name: str) -> None:
     else:
         print(f"{name}: not running")
     state_path(name).unlink(missing_ok=True)
-    if name == "jupyter":
+    if name == "jupyter" and not preserve_token:
         TOKEN_FILE.unlink(missing_ok=True)
 
 
@@ -281,6 +289,10 @@ def show_url(name: str) -> None:
     url = base_url(state)
     if name == "jupyter":
         url += "/lab/tree/notebooks/pytorch?" + urllib.parse.urlencode({"token": read_token()})
+    elif name == "book":
+        jupyter = read_state("jupyter")
+        if is_running(jupyter):
+            url = base_url(jupyter) + "/book/?" + urllib.parse.urlencode({"token": read_token()})
     print(f"{name}: {url}")
 
 
@@ -293,7 +305,7 @@ def port_number(value: str) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("action", choices=("start", "status", "stop", "url"))
+    parser.add_argument("action", choices=("start", "restart", "status", "stop", "url"))
     parser.add_argument("service", nargs="?", default="all", choices=("all", *SERVICES))
     parser.add_argument("--book-dir", default="_build/html", help="textbook directory, relative to repository (default: _build/html)")
     parser.add_argument("--jupyter-port", type=port_number, default=8888)
@@ -310,6 +322,16 @@ def main() -> int:
                 try:
                     if args.action == "start":
                         start(name, args)
+                    elif args.action == "restart":
+                        previous = read_state(name)
+                        if is_running(previous):
+                            if name == "jupyter":
+                                args.jupyter_port = previous["port"]
+                            else:
+                                args.book_port = previous["port"]
+                                args.book_dir = previous["command"][-1]
+                        stop(name, preserve_token=True)
+                        start(name, args, preserve_token=True)
                     elif args.action == "stop":
                         stop(name)
                     elif args.action == "status":
@@ -319,7 +341,7 @@ def main() -> int:
                 except (ServiceError, OSError, subprocess.SubprocessError) as error:
                     print(f"Error: {error}", file=sys.stderr)
                     success = False
-        if args.action == "start" and "jupyter" in names and success:
+        if args.action in ("start", "restart") and "jupyter" in names and success:
             print("For the authenticated Jupyter URL: python deployment/server.py url jupyter")
     except (ServiceError, OSError) as error:
         print(f"Error: {error}", file=sys.stderr)

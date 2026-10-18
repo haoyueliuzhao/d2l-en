@@ -27,3 +27,15 @@ c.ServerApp.runtime_dir = str(RUNTIME / "jupyter")
 c.ServerApp.log_level = "WARN"
 c.IdentityProvider.token = token
 c.PasswordIdentityProvider.allow_password_change = False
+
+# Reuse Jupyter's authenticated origin for the already-running textbook server.
+c.ServerApp.jpserver_extensions = {"jupyter_server_proxy": True}
+c.ServerProxy.servers = {
+    "book": {
+        "command": [],
+        "port": int(os.environ.get("D2L_BOOK_PORT", "8080")),
+        "absolute_url": False,
+        "launcher_entry": {"title": "D2L Textbook"},
+        "new_browser_tab": True,
+    }
+}

@@ -5,6 +5,7 @@ import d2l
 # Exact versions of the deployed environment are recorded under deployment/.
 requirements = [
     'jupyterlab>=4.4,<5',
+    'jupyter-server-proxy>=4.4,<5',
     'ipykernel>=6.29,<8',
     'numpy>=2.1,<3',
     'matplotlib>=3.9,<4',
